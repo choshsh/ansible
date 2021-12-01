@@ -1,0 +1,25 @@
+- name: 타임존 설정
+  timezone:
+    name: Asia/Seoul
+
+- name: /etc/hosts에 자기 hostname 추가 (kubeadm init 관련)
+  lineinfile:
+    path: "/etc/hosts"
+    line: "127.0.0.1 {{ ansible_hostname }}"
+    state: present
+
+- name: yum 업데이트 (yum update -y)
+  yum:
+    name: "*"
+    exclude:
+      - kubelet
+      - kubeadm
+      - kubectl
+      - docker
+    state: latest
+  when: ansible_distribution == 'Amazon' or ansible_distribution == 'CentOS'
+
+- name: python3 설치
+  yum:
+    name: python3
+    state: present

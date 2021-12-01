@@ -1,0 +1,27 @@
+- name: ansible 사용을 위한 기본 설정
+  hosts: all
+  become: true
+  vars:
+    custom_ansible_user: ansibleuser
+  tasks:
+    - name: ansible user 추가
+      user:
+        name: "{{ custom_ansible_user }}"
+        shell: /bin/bash
+        group: wheel
+
+    - name: authorized key 설정 및 기존 파일 삭제
+      authorized_key:
+        user: "{{ custom_ansible_user }}"
+        key: "{{ item }}"
+        state: present
+        exclusive: true
+      with_file:
+        - publickeys/aws-key.pub
+
+    - name: sudo 사용 시 password 안 묻기
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        line: "{{ custom_ansible_user }} ALL=(ALL) NOPASSWD: ALL"
+        validate: "visudo -cf %s"

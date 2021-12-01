@@ -1,0 +1,21 @@
+- name: 서비스 enable
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  with_items:
+    - kubelet
+    - containerd
+
+- name: Docker 서비스 enable
+  systemd:
+    name: docker
+    enabled: yes
+    state: started
+
+- name: systemd 데몬 리로드
+  systemd:
+    daemon_reload: true
+
+- name: sysctl 리로드
+  command: sysctl --system

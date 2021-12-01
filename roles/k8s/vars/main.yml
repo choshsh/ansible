@@ -1,0 +1,5 @@
+#ansible_python_interpreter: “/usr/bin/python3”
+
+kube_version: "1.22.4"
+kube_container_runtime: "docker" # docker or containerd
+kube_proxy_mode: "iptables" # iptables or ipvs
