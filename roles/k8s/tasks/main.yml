@@ -35,6 +35,12 @@
   tags:
     - config
 
+- name: modprobe
+  shell: |
+    modprobe overlay
+    modprobe br_netfilter
+    sysctl --system
+
 - name: CentOS 기본 설정
   script: files/setting_centos.sh
   when: ansible_distribution == 'CentOS'

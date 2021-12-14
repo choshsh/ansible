@@ -18,4 +18,4 @@
     daemon_reload: true
 
 - name: sysctl 리로드
-  command: sysctl --system
+  shell: sysctl --system
