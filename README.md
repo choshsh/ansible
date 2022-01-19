@@ -55,5 +55,5 @@ ansible-playbook site.yml
 ### 검증
 
 ```bash
-ansible k8s:master -m shell -a 'kubeadm init --dry-run'
+ansible k8s:all -m shell -a 'kubeadm init --dry-run'
 ```
