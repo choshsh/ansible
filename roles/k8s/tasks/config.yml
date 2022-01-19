@@ -1,0 +1,43 @@
+- name: ipvs - 커널 모듈 로드
+  copy:
+    src: files/module_ipvs.conf
+    dest: /etc/modules-load.d/ipvs.conf
+  when: ansible_distribution == 'Amazon' and kube_proxy_mode == 'ipvs'
+  tags:
+    - config
+    - ipvs
+    - amazon
+
+- name: ipvs - 패키지 설치
+  yum:
+    name:
+      - ipset
+      - ipvsadm
+    state: present
+  when: ansible_distribution == 'Amazon' and kube_proxy_mode == 'ipvs'
+  tags:
+    - config
+    - ipvs
+    - amazon
+
+- name: 커널 모듈 로드
+  copy:
+    src: files/module.conf
+    dest: "{{ kernel_module_dir }}"
+  notify: module 리로드
+  tags:
+    - config
+
+- name: sysctl 구성
+  copy:
+    src: files/sysctl_k8s.conf
+    dest: "{{ kernel_systctl_dir }}"
+  notify: sysctl 리로드
+  tags:
+    - config
+
+- name: CentOS 기본 설정
+  script: files/setting_centos.sh
+  when: ansible_distribution == 'CentOS'
+  tags:
+    - centos
