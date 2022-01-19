@@ -1,0 +1,6 @@
+- name: 서비스 enable
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  with_items: "{{ svc }}"

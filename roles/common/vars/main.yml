@@ -1,0 +1,9 @@
+pkg:
+  - ntp
+  - vim
+  - strace
+  - tcpdump
+  - rsync
+
+svc:
+  - ntpd
