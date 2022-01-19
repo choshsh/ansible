@@ -3,6 +3,7 @@
     src: files/module_ipvs.conf
     dest: /etc/modules-load.d/ipvs.conf
   when: ansible_distribution == 'Amazon' and kube_proxy_mode == 'ipvs'
+  notify: module 리로드
   tags:
     - config
     - ipvs
