@@ -17,5 +17,8 @@
   systemd:
     daemon_reload: true
 
+- name: module 리로드
+  shell: "for m in $(cat {{ kernel_module_dir }}); do modprobe $m ; done"
+
 - name: sysctl 리로드
   shell: sysctl --system
