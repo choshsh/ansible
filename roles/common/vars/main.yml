@@ -4,6 +4,7 @@ pkg:
   - strace
   - tcpdump
   - rsync
+  - dstat
 
 svc:
   - ntpd
